@@ -33,6 +33,7 @@ public class frontPage extends javax.swing.JFrame {
         mainBgPanel = new javax.swing.JPanel();
         mainBtnsPanel = new javax.swing.JPanel();
         mainTextScreenPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         mainSettingsPanel = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -47,8 +48,6 @@ public class frontPage extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(500, 700));
-        setPreferredSize(new java.awt.Dimension(500, 700));
 
         mainBgPanel.setBackground(new java.awt.Color(0, 102, 204));
 
@@ -63,16 +62,31 @@ public class frontPage extends javax.swing.JFrame {
             .addGap(0, 268, Short.MAX_VALUE)
         );
 
+        mainTextScreenPanel.setOpaque(false);
+
+        jLabel1.setFont(new java.awt.Font("at01", 1, 100)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Suika Game");
+
         javax.swing.GroupLayout mainTextScreenPanelLayout = new javax.swing.GroupLayout(mainTextScreenPanel);
         mainTextScreenPanel.setLayout(mainTextScreenPanelLayout);
         mainTextScreenPanelLayout.setHorizontalGroup(
             mainTextScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 366, Short.MAX_VALUE)
+            .addGroup(mainTextScreenPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         mainTextScreenPanelLayout.setVerticalGroup(
             mainTextScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 117, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainTextScreenPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        mainSettingsPanel.setOpaque(false);
 
         javax.swing.GroupLayout mainSettingsPanelLayout = new javax.swing.GroupLayout(mainSettingsPanel);
         mainSettingsPanel.setLayout(mainSettingsPanelLayout);
@@ -161,6 +175,7 @@ public class frontPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel mainBgPanel;
     private javax.swing.JPanel mainBtnsPanel;
