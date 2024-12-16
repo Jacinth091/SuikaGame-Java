@@ -10,16 +10,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import main.app.GameContext;
+import main.eventHandlers.KeyHandler;
+import main.logic.Playable;
 
 /**
  *
  * @author PCC
  */
-public class GameWindow extends javax.swing.JFrame {
+public class GameWindow extends javax.swing.JFrame implements Playable{
     
     private GameContext gameContext;
     private int windowHeight, windowWidth;
     private GamePanel gp;
+    private KeyHandler keyH;
     /**
      * Creates new form GameWindow
      * @param gameContext
@@ -30,11 +33,16 @@ public class GameWindow extends javax.swing.JFrame {
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
         this.gameContext = gameContext;
+//        this.keyH = gameContext.getKeyH();
 
-        this.gp = new GamePanel();
+        this.gp = new GamePanel(gameContext);
+
 
         initComponents();
         addGamePanel();
+        initEvents();   
+        
+ 
         setLocationRelativeTo(null); // Center the window
         setVisible(true); // Make the window visible
     }
@@ -70,7 +78,6 @@ public class GameWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(500, 700));
-        setPreferredSize(new java.awt.Dimension(500, 700));
         setResizable(false);
         setSize(new java.awt.Dimension(500, 700));
 
@@ -198,6 +205,18 @@ public class GameWindow extends javax.swing.JFrame {
         });
     }
     
+    private void initEvents(){
+        gameContext.getGameThread().addEventUpdate(() -> {
+            update();
+            repaint();
+//            repaint();
+        });
+    }
+    
+    private void update(){
+        gp.gpUpdate();
+        gp.repaint();
+    }
     
     private void addGamePanel(){
         mainGpContainer.setLayout(new GridBagLayout()); // GridBagLayout for centering GamePanel
@@ -222,9 +241,33 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JButton SettingsBtn;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainBtnsPanel;
     private javax.swing.JPanel mainGpContainer;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void startGame() {
+        
+        
+    }
+
+    @Override
+    public void pauseGame() {
+        
+        
+    }
+
+    @Override
+    public void restartGame() {
+        
+        
+    }
+
+    @Override
+    public void stopGame() {
+        
+        
+        
+    }
 }

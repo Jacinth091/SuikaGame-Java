@@ -20,8 +20,8 @@ public class App {
     public void startApp(){
 
         java.awt.EventQueue.invokeLater(() ->{
-            new GameManager(gameContext);
-            new GameWindow(gameContext,windowHeight, windowWidth);
+            GameManager gameManager = new GameManager(gameContext);
+            GameWindow gameWindow = new GameWindow(gameContext,windowHeight, windowWidth);
         });
 
     }

@@ -4,6 +4,7 @@
  */
 package main.app;
 
+import main.eventHandlers.KeyHandler;
 import main.logic.GameThread;
 
 /**
@@ -12,13 +13,15 @@ import main.logic.GameThread;
  */
 public class GameContext {
     public static GameContext instance;
-private GameThread gameThread; // The game thread object
+    private GameThread gameThread; 
     private boolean isGameRunning;
+    private KeyHandler keyH;
 
     private GameContext() {
         this.isGameRunning = false;
         this.gameThread = new GameThread();
-        startGame();
+        this.keyH = new KeyHandler();
+//        startGame();
     }
 
     public static synchronized GameContext getInstance() {
@@ -47,5 +50,10 @@ private GameThread gameThread; // The game thread object
     public GameThread getGameThread() {
         return gameThread;
     }
+
+    public KeyHandler getKeyH() {
+        return keyH;
+    }
+    
     
 }

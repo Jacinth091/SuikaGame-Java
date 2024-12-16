@@ -55,13 +55,7 @@ public class GameThread implements Runnable{
             lastTime = currentTime;
 
             if (delta >= 1) {
-                try{
-                    Thread.sleep(1000);
-                    updateGame();
-                }
-                catch(InterruptedException e){
-                    e.printStackTrace();
-                }
+                updateGame();
 
                 delta--;
                 frameCount++;
@@ -77,7 +71,7 @@ public class GameThread implements Runnable{
     
     
     public void updateGame(){
-        System.out.println("GameState: " + currentState);
+//        System.out.println("GameState: " + currentState);
         if(null != currentState)
         switch (currentState) {
             case Play:

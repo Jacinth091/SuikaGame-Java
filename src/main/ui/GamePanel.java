@@ -5,18 +5,36 @@
 package main.ui;
 
 import java.awt.*;
+import main.app.GameContext;
+import main.eventHandlers.KeyHandler;
+import main.logic.GameUpdate;
 
 /**
  *
  * @author PCC
  */
 public class GamePanel extends javax.swing.JPanel {
-
-    /**
+    private GameContext gameContext;
+    private KeyHandler keyH;
+    int x =0, y =0;
+    /** 
      * Creates new form GamePanel
+     * @param gameContext
      */
-    public GamePanel() {
+    public GamePanel(GameContext gameContext) {
+        this.gameContext = gameContext;
+        this.keyH = gameContext.getKeyH();
+        
+//        initEvents();
+
+        this.setFocusable(true);
+        this.setDoubleBuffered(true);
+        this.requestFocusInWindow(); // Request focus for key events
+        
+        gameContext.getKeyH().bindKeyActions(this);
+
         initComponents();
+        
     }
     
     
@@ -26,15 +44,37 @@ public class GamePanel extends javax.swing.JPanel {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 50, 50);
+        draw(g2);
 
         g2.dispose();
         
     }
     
     
+    private void draw(Graphics2D g2){
+        g2.setColor(Color.WHITE);
+        g2.fillRect(x, y, 50, 50);
+
+    }
     
+    public void gpUpdate(){
+        if (keyH.isUpPressed()) y-=3;
+        else if (keyH.isDownPressed()) y += 3;
+        else if (keyH.isLeftPressed()) x -= 3;
+        else if (keyH.isRightPressed()) x += 3;
+         
+//        x+=10;
+//        y+=10;
+        // Ensure x and y remain within bounds
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (x + 50 > getWidth()) x = getWidth() - 50;
+        if (y + 50 > getHeight()) y = getHeight() - 50;
+
+//        System.out.println("X:" + x + " Y:" + y);
+    }
+    
+
     
 
     /**
