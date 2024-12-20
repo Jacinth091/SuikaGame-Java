@@ -12,23 +12,20 @@ import main.logic.GameThread;
  * @author PCC
  */
 public class GameContext {
-    public static GameContext instance;
-    private GameThread gameThread; 
+    private GameThread gameThread;
+    private final KeyHandler keyH;
     private boolean isGameRunning;
-    private KeyHandler keyH;
+    
+    
+    private int windowHeight, windowWidth;
+    private int gpHeight, gpWidth;
 
-    private GameContext() {
+    public GameContext(GameThread gameThread, KeyHandler keyH) {
+        this.windowHeight = 700;
+        this.windowWidth = 650;
+        this.gameThread = gameThread;
+        this.keyH = keyH;
         this.isGameRunning = false;
-        this.gameThread = new GameThread();
-        this.keyH = new KeyHandler();
-//        startGame();
-    }
-
-    public static synchronized GameContext getInstance() {
-        if (instance == null) {
-            instance = new GameContext();
-        }
-        return instance;
     }
 
     public void startGame() {
@@ -42,6 +39,34 @@ public class GameContext {
         isGameRunning = false;
         gameThread = null; // Allow garbage collection
     }
+
+    public int getWindowHeight() {
+        return windowHeight;
+    }
+
+    public int getWindowWidth() {
+        return windowWidth;
+    }
+
+    public int getGpHeight() {
+        return gpHeight;
+    }
+
+    public void setGpHeight(int gpHeight) {
+        this.gpHeight = gpHeight;
+    }
+
+    public int getGpWidth() {
+        return gpWidth;
+    }
+
+    public void setGpWidth(int gpWidth) {
+        this.gpWidth = gpWidth;
+    }
+
+    
+    
+    
     
     public boolean isGameRunning() {
         return isGameRunning;
@@ -54,6 +79,4 @@ public class GameContext {
     public KeyHandler getKeyH() {
         return keyH;
     }
-    
-    
 }

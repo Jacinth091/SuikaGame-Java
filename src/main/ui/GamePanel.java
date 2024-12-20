@@ -6,8 +6,8 @@ package main.ui;
 
 import java.awt.*;
 import main.app.GameContext;
+import main.entity.player.Player;
 import main.eventHandlers.KeyHandler;
-import main.logic.GameUpdate;
 
 /**
  *
@@ -16,27 +16,32 @@ import main.logic.GameUpdate;
 public class GamePanel extends javax.swing.JPanel {
     private GameContext gameContext;
     private KeyHandler keyH;
-    int x =0, y =0;
+    private Player player;
+
     /** 
      * Creates new form GamePanel
      * @param gameContext
      */
     public GamePanel(GameContext gameContext) {
         this.gameContext = gameContext;
+        gameContext.setGpHeight(570);
+        gameContext.setGpWidth(650);
         this.keyH = gameContext.getKeyH();
-        
-//        initEvents();
 
         this.setFocusable(true);
         this.setDoubleBuffered(true);
-        this.requestFocusInWindow(); // Request focus for key events
+        this.requestFocusInWindow(); 
         
-        gameContext.getKeyH().bindKeyActions(this);
-
         initComponents();
+        init();
         
     }
-    
+    private void init(){
+        this.player = new Player(gameContext);
+        gameContext.getKeyH().setupKeyBindings(this);
+
+
+    }
     
     @Override
     public void paintComponent(Graphics g){
@@ -52,26 +57,14 @@ public class GamePanel extends javax.swing.JPanel {
     
     
     private void draw(Graphics2D g2){
-        g2.setColor(Color.WHITE);
-        g2.fillRect(x, y, 50, 50);
+
+        player.draw(g2);
 
     }
     
     public void gpUpdate(){
-        if (keyH.isUpPressed()) y-=3;
-        else if (keyH.isDownPressed()) y += 3;
-        else if (keyH.isLeftPressed()) x -= 3;
-        else if (keyH.isRightPressed()) x += 3;
-         
-//        x+=10;
-//        y+=10;
-        // Ensure x and y remain within bounds
-        if (x < 0) x = 0;
-        if (y < 0) y = 0;
-        if (x + 50 > getWidth()) x = getWidth() - 50;
-        if (y + 50 > getHeight()) y = getHeight() - 50;
-
-//        System.out.println("X:" + x + " Y:" + y);
+        player.update();
+        player.getCoordinates();
     }
     
 
@@ -87,18 +80,18 @@ public class GamePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(140, 180, 249));
-        setMaximumSize(new java.awt.Dimension(500, 700));
-        setPreferredSize(new java.awt.Dimension(500, 700));
+        setMaximumSize(new java.awt.Dimension(650, 570));
+        setPreferredSize(new java.awt.Dimension(650, 570));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 699, Short.MAX_VALUE)
+            .addGap(0, 570, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

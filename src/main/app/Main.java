@@ -4,6 +4,8 @@
  */
 package main.app;
 
+import main.logic.GCFactory;
+
 /**
  *
  * @author PCC
@@ -11,8 +13,8 @@ package main.app;
 public class Main {
     
     public static void main(String[] args) {
-        GameContext gameContext = GameContext.getInstance();
-        App app = new App(gameContext, 500,700);
+        GameContext gameContext = GCFactory.createGameContext();
+        App app = new App(gameContext);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

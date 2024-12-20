@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import main.app.GameContext;
 import main.eventHandlers.KeyHandler;
+import main.logic.GCFactory;
 import main.logic.Playable;
 
 /**
@@ -26,14 +27,13 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
     /**
      * Creates new form GameWindow
      * @param gameContext
-     * @param windowHeight
-     * @param windowWidth
      */
-    public GameWindow(GameContext gameContext, int windowHeight, int windowWidth) {
-        this.windowHeight = windowHeight;
-        this.windowWidth = windowWidth;
+    public GameWindow(GameContext gameContext) {
         this.gameContext = gameContext;
-//        this.keyH = gameContext.getKeyH();
+        this.windowHeight = gameContext.getWindowHeight();
+        this.windowWidth = gameContext.getWindowWidth();
+
+
 
         this.gp = new GamePanel(gameContext);
 
@@ -63,7 +63,7 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         mainBtnsPanel = new javax.swing.JPanel();
         ScoreLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        SettingsBtn = new javax.swing.JButton();
+        PauseBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -77,17 +77,19 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(500, 700));
+        setMaximumSize(new java.awt.Dimension(650, 700));
         setResizable(false);
-        setSize(new java.awt.Dimension(500, 700));
+        setSize(new java.awt.Dimension(650, 700));
 
         mainGpContainer.setBackground(new java.awt.Color(204, 204, 204));
+        mainGpContainer.setMaximumSize(new java.awt.Dimension(650, 570));
+        mainGpContainer.setPreferredSize(new java.awt.Dimension(650, 570));
 
         javax.swing.GroupLayout mainGpContainerLayout = new javax.swing.GroupLayout(mainGpContainer);
         mainGpContainer.setLayout(mainGpContainerLayout);
         mainGpContainerLayout.setHorizontalGroup(
             mainGpContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         mainGpContainerLayout.setVerticalGroup(
             mainGpContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,10 +105,11 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
 
         jPanel1.setOpaque(false);
 
-        SettingsBtn.setText("jButton1");
-        SettingsBtn.addActionListener(new java.awt.event.ActionListener() {
+        PauseBtn.setText("Pause");
+        PauseBtn.setFocusable(false);
+        PauseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SettingsBtnActionPerformed(evt);
+                PauseBtnActionPerformed(evt);
             }
         });
 
@@ -116,14 +119,14 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(SettingsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PauseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(SettingsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PauseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -134,7 +137,7 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
             .addGroup(mainBtnsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110)
+                .addGap(192, 192, 192)
                 .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -153,22 +156,24 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainBtnsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mainGpContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainGpContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(mainBtnsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(mainGpContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainGpContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SettingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsBtnActionPerformed
+    private void PauseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PauseBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SettingsBtnActionPerformed
+    }//GEN-LAST:event_PauseBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,7 +205,7 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GameWindow(GameContext.getInstance(),500,700).setVisible(true);
+                new GameWindow(GCFactory.createGameContext()).setVisible(true);
             }
         });
     }
@@ -218,9 +223,11 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         gp.repaint();
     }
     
-    private void addGamePanel(){
+   private void addGamePanel(){
         mainGpContainer.setLayout(new GridBagLayout()); // GridBagLayout for centering GamePanel
-        mainGpContainer.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        mainGpContainer.setPreferredSize(new Dimension(gameContext.getGpWidth(), gameContext.getGpHeight()));
+        mainGpContainer.setMinimumSize(new Dimension(gameContext.getGpWidth(), gameContext.getGpHeight()));
+        mainGpContainer.setMaximumSize(new Dimension(gameContext.getGpWidth(), gameContext.getGpHeight()));
 
         mainGpContainer.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -230,15 +237,11 @@ public class GameWindow extends javax.swing.JFrame implements Playable{
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         mainGpContainer.add(gp, gbc);
-        
-        
-        
-        
     }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton PauseBtn;
     private javax.swing.JLabel ScoreLabel;
-    private javax.swing.JButton SettingsBtn;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

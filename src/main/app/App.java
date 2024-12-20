@@ -9,10 +9,11 @@ public class App {
     private int windowHeight, windowWidth;
     private GameContext gameContext;
 
-    public App(GameContext gameContext, int windowHeight, int windowWidth){
-        this.windowHeight = windowHeight;
-        this.windowWidth = windowWidth;
+    public App(GameContext gameContext){
         this.gameContext = gameContext;
+
+        this.windowHeight = gameContext.getWindowHeight();
+        this.windowWidth = gameContext.getWindowWidth();
         
         
     }
@@ -21,7 +22,7 @@ public class App {
 
         java.awt.EventQueue.invokeLater(() ->{
             GameManager gameManager = new GameManager(gameContext);
-            GameWindow gameWindow = new GameWindow(gameContext,windowHeight, windowWidth);
+            GameWindow gameWindow = new GameWindow(gameContext);
         });
 
     }
